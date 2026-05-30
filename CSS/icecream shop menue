@@ -10,7 +10,7 @@
       color: #4a2c2a;
     }
     h1 {
-      color: #d63384;
+      color: whitesmoke;
       font-size: 36px;
     }
     h1 + p {
@@ -21,13 +21,13 @@
     }
     .shop-description::first-letter {
       font-size: 36px;
-      color: #ff1493;
+      color: blue;
       font-weight: bold;
     }
     .menu-box {
       width: 420px;
-      background-color: white;
-      border: 3px solid #ff69b4;
+      background-color: lightgray;
+      border: 3px solid blue;
       border-radius: 15px;
       margin: 20px auto;
       padding: 20px;
@@ -37,8 +37,8 @@
     }
     ul > li {
       list-style: none;
-      background-color: #fff0f5;
-      color: #5c2a4a;
+      background-color: blue;
+      color: whitesmoke;
       font-size: 18px;
       font-weight: bold;
       margin: 10px;
@@ -47,8 +47,8 @@
       border: 2px solid #ffb6c1;
     }
     ul > li:nth-child(3) {
-      background-color: #fff3cd;
-      color: #b85c00;
+      background-color: red;
+      color: whitesmoke;
       border: 3px solid #ffa500;
     }
     ul > li:hover {
@@ -82,7 +82,7 @@
     <ul>
       <li>Chocolate Delight</li>
       <li>Strawberry Swirl</li>
-      <li>Mango Magic - Today's Special</li>
+      <li>sweet pop - Today's Special</li>
       <li>Vanilla Dream</li>
       <li>Blueberry Blast</li>
     </ul>
