@@ -1,0 +1,6 @@
+console.log(40 + 30)
+console.log(20 - 10)
+console.log(70 / 2)
+console.log(50 * 3)
+console.log(60 % 30)
+console.log(40 ** 20)
