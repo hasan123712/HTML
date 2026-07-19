@@ -1,0 +1,110 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+    <title>Zoo</title>
+
+    <style>
+        body {
+
+            font-family: Arial;
+
+            text-align: center;
+
+            background: white;
+
+        }
+
+        .container {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 20px;
+
+            margin: 30px;
+
+        }
+
+        .box {
+
+            width: 150px;
+
+            height: 120px;
+
+            border: 2px solid black;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 22px;
+
+            background: #eeeeee;
+
+        }
+
+        button {
+
+            padding: 12px 25px;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+        }
+
+        #status {
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: green;
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1 id="title">Welcome to My Zoo</h1>
+
+    <div class="container">
+
+        <div class="box" id="zoo1">Empty</div>
+
+        <div class="box" id="zoo2">Empty</div>
+
+        <div class="box" id="zoo3">Empty</div>
+
+    </div>
+
+    <h2 id="count">Animals : 0</h2>
+
+    <p id="status">Zoo Closed</p>
+
+    <button onclick="openZoo()">Open the Zoo</button>
+
+    <script>
+        function openZoo(){
+            document.getElementById("zoo1").innerHTML="Lion"
+            document.getElementById("zoo2").innerHTML="Cheeta"
+            document.getElementById("zoo3").innerHTML="Monkey"
+            document.getElementById("count").innerHTML="Animals : 3"
+            document.body.style.backgroundColor="lightgreen"
+            document.getElementById("title").innerHTML="zoo is open"
+            document.getElementById("status").innerHTML="Visitors are welcome"
+        }
+    
+    </script>
+
+</body>
+
+</html>
