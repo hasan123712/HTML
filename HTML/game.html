@@ -1,0 +1,176 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+    <title>Game Profile</title>
+
+    <style>
+        body {
+
+            background: #f2f2f2;
+
+            font-family: Arial;
+
+        }
+
+        .card {
+
+            width: 400px;
+
+            margin: 40px auto;
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow: 0px 0px 10px gray;
+
+        }
+
+        button {
+
+            padding: 10px 20px;
+
+            background: blue;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+        }
+
+        button:hover {
+
+            background: darkblue;
+
+        }
+
+        p {
+
+            font-size: 18px;
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="card">
+
+        <h1>Game Profile</h1>
+
+        <button onclick="showProfile()">Show Profile</button>
+
+        <p><b>Name:</b> <span id="name"></span></p>
+
+        <p><b>Game:</b> <span id="game"></span></p>
+
+        <p><b>Score:</b> <span id="score"></span></p>
+
+        <p><b>New Record:</b> <span id="record"></span></p>
+
+        <p><b>Rank:</b> <span id="rank"></span></p>
+
+        <p><b>Greeting:</b> <span id="greeting"></span></p>
+
+        <p><b>Star Trail:</b> <span id="stars"></span></p>
+
+        <p><b>Null:</b> <span id="nullValue"></span></p>
+
+        <p><b>Undefined:</b> <span id="undefinedValue"></span></p>
+
+    </div>
+
+
+    <script>
+
+        function showProfile() {
+
+            let playerName = "Alex";
+
+            let game = "Minecraft";
+
+            let score = 980;
+
+            let newRecord = score > 900;
+
+            let rank = "";
+
+            if (score >= 900) {
+
+                rank = "🏆 Gold";
+
+            } else {
+
+                rank = "🥈 Silver";
+
+            }
+
+            let hour = new Date().getHours();
+
+            let greeting = "";
+
+            if (hour < 12) {
+
+                greeting = "Good Morning";
+
+            } else if (hour < 18) {
+
+                greeting = "Good Afternoon";
+
+            } else {
+
+                greeting = "Good Evening";
+
+            }
+
+            let stars = "";
+
+            let i = 1;
+
+            while (i <= 5) {
+
+                stars = stars + "⭐";
+
+                i++;
+
+            }
+
+            let emptyValue = null;
+
+            let missingValue;
+
+            document.getElementById("name").innerHTML = playerName;
+
+            document.getElementById("game").innerHTML = game;
+
+            document.getElementById("score").innerHTML = score;
+
+            document.getElementById("record").innerHTML = newRecord;
+
+            document.getElementById("rank").innerHTML = rank;
+
+            document.getElementById("greeting").innerHTML = greeting;
+
+            document.getElementById("stars").innerHTML = stars;
+
+            document.getElementById("nullValue").innerHTML = emptyValue;
+
+            document.getElementById("undefinedValue").innerHTML = missingValue;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
