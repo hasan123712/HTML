@@ -1,0 +1,98 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+    <title>Planet Cards</title>
+
+    <style>
+        body {
+
+            font-family: Arial;
+
+            background: #f2f2f2;
+
+            text-align: center;
+
+        }
+
+        button {
+
+            padding: 12px 25px;
+
+            font-size: 18px;
+
+            margin: 20px;
+
+        }
+
+        .container {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 20px;
+
+        }
+
+        .card {
+
+            width: 220px;
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 0 10px gray;
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Planet Cards</h1>
+
+    <button onclick="showPlanets()">Show Planets</button>
+
+    <div class="container">
+
+        <div class="card" id="card1"></div>
+
+        <div class="card" id="card2"></div>
+
+        <div class="card" id="card3"></div>
+
+    </div>
+
+
+
+    <script>
+        class Planet{
+            constructor(name, fact) {
+              this.name = name
+              this.fact = fact  
+            }
+
+            getCard(){
+                return `< h2 > ${this.name}</h2>
+                <p>${this.fact}</p>`
+            }
+
+
+        }
+
+        function showPlanets(){
+            let p1 = new Planet("Earth", "It is more water that land")
+            let p2 = new Planet("Mars", "temp goes till -240")
+            let p3 = new Planet("jupiter", "Gas giant")
+            document.getElementById("card1").innerHTML=p1.getCard()
+            document.getElementById("card2").innerHTML=p2.getCard()
+            document.getElementById("card3").innerHTML=p3.getCard()
+        }
+    </script>
