@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quest 🚀 — Learn to Code</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-top: #cdeeff;
+            --bg-bottom: #eaf6ff;
+            --surface: #ffffff;
+            --ink: #1f2a44;
+            --ink-soft: #4a5578;
+            --primary: #ff6b6b;
+            --primary-dark: #e85454;
+            --secondary: #4ecdc4;
+            --yellow: #ffd166;
+            --success: #06d6a0;
+            --success-dark: #04a37b;
+            --wall: #2b2d5c;
+            --radius: 18px;
+            --cell: 64px;
+            --gap: 6px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Nunito', sans-serif;
+            color: var(--ink);
+            background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 380px, #fdf9f0 380px);
+            line-height: 1.5;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Baloo 2', cursive;
+            margin: 0 0 .3em 0;
+            color: var(--wall);
+        }
+
+        a {
+            color: inherit;
+        }
+
+        button {
+            font-family: 'Baloo 2', cursive;
+            cursor: pointer;
+            border: none;
+            border-radius: 999px;
+            font-size: 1rem;
+            padding: .6em 1.2em;
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--wall);
+            outline-offset: 2px;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 0 var(--primary-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active {
+            box-shadow: 0 1px 0 var(--primary-dark);
+            transform: translateY(3px);
+        }
+
+        .btn-ghost {
+            background: #fff;
+            color: var(--wall);
+            border: 2px solid #dfe6f2;
+            box-shadow: 0 3px 0 #dfe6f2;
+        }
+
+        .btn-ghost:active {
+            box-shadow: 0 1px 0 #dfe6f2;
+            transform: translateY(2px);
+        }
+
+        .btn-block {
+            background: var(--secondary);
+            color: #08423e;
+            box-shadow: 0 4px 0 #2fa39c;
+        }
+
+        .btn-block:active {
+            box-shadow: 0 1px 0 #2fa39c;
+            transform: translateY(3px);
+        }
+
+        /* ---------- HERO / QUEST MAP ---------- */
+        .hero {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 56px 24px 40px;
+            text-align: center;
+        }
+
+        .hero .eyebrow {
+            font-weight: 800;
+            color: var(--primary-dark);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            font-size: .8rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+        }
+
+        .hero p.lead {
+            font-size: 1.15rem;
+            color: var(--ink-soft);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .quest-map {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 720px;
+            margin: 48px auto 0;
+            padding: 0 8px;
+        }
+
+        .quest-map::before {
+            content: "";
+            position: absolute;
+            top: 26px;
+            left: 6%;
+            right: 6%;
+            height: 0;
+            border-top: 4px dashed #b9d4e8;
+            z-index: 0;
+        }
+
+        .quest-node {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            width: 16%;
+        }
+
+        .quest-node .dot {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #b9d4e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            transition: transform .2s ease, border-color .2s ease, background .2s ease;
+        }
+
+        .quest-node:hover .dot {
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+        }
+
+        .quest-node.done .dot {
+            background: var(--success);
+            border-color: var(--success-dark);
+            color: #fff;
+        }
+
+        .quest-node span.label {
+            font-size: .72rem;
+            font-weight: 700;
+            color: var(--ink-soft);
+            text-align: center;
+        }
+
+        /* ---------- MAIN / LEVEL CARDS ---------- */
+        main {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        .level-card {
+            background: var(--surface);
+            border-radius: 24px;
+            padding: 32px clamp(20px, 4vw, 44px);
+            margin-bottom: 32px;
+            box-shadow: 0 10px 30px rgba(43, 45, 92, .08);
+            scroll-margin-top: 20px;
+        }
+
+        .level-head {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        .level-num {
+            flex: 0 0 auto;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: var(--yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Baloo 2', cursive;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--wall);
+        }
+
+        .level-card p {
+            color: var(--ink-soft);
+            font-size: 1.02rem;
+        }
+
+        .concept-box {
+            background: #f3f8ff;
+            border-left: 4px solid var(--secondary);
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-size: .95rem;
+            color: var(--ink);
+            margin: 16px 0;
+        }
+
+        .concept-box b {
+            color: var(--wall);
+        }
+
+        /* ---------- LEVEL 1: recipe steps ---------- */
+        .steps-row {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: 18px 0;
+        }
+
+        .step-chip {
+            background: #fff9ec;
+            border: 2px solid var(--yellow);
+            border-radius: 14px;
+            padding: 14px 16px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: .35;
+            transform: scale(.96);
+            transition: all .35s ease;
+        }
+
+        .step-chip.active {
+            opacity: 1;
+            transform: scale(1.06);
+            border-color: var(--primary);
+            background: #fff;
+        }
+
+        .step-chip small {
+            font-size: .6rem;
+            font-weight: 800;
+            color: var(--ink-soft);
+        }
+
+        /* ---------- GRID PUZZLES (levels 2-4) ---------- */
+        .puzzle-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            align-items: flex-start;
+            margin-top: 18px;
+        }
+
+        .grid-shell {
+            position: relative;
+        }
+
+        .grid {
+            display: grid;
+            background: #eef4fb;
+            padding: 8px;
+            border-radius: 16px;
+        }
+
+        .cell {
+            width: var(--cell);
+            height: var(--cell);
+            background: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+        }
+
+        .rocket {
+            position: absolute;
+            width: calc(var(--cell) - 16px);
+            height: calc(var(--cell) - 16px);
+            top: 8px;
+            left: 8px;
+            font-size: 1.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: left .5s cubic-bezier(.4, 0, .2, 1), top .5s cubic-bezier(.4, 0, .2, 1), transform .5s ease;
+            filter: drop-shadow(0 4px 4px rgba(0, 0, 0, .2));
+        }
+
+        .controls {
+            flex: 1 1 220px;
+            min-width: 220px;
+        }
+
+        .palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .program {
+            min-height: 44px;
+            background: #f3f8ff;
+            border-radius: 12px;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+            font-weight: 700;
+            font-size: .85rem;
+        }
+
+        .chip {
+            background: #fff;
+            border: 2px solid var(--secondary);
+            border-radius: 999px;
+            padding: 4px 10px;
+            color: #08423e;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .status-msg {
+            margin-top: 14px;
+            font-weight: 800;
+            min-height: 1.4em;
+        }
+
+        .status-msg.success {
+            color: var(--success-dark);
+        }
+
+        .status-msg.fail {
+            color: var(--primary-dark);
+        }
+
+        /* ---------- LEVEL 5: variables ---------- */
+        .score-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            background: #f3f8ff;
+            border-radius: 16px;
+            padding: 16px 26px;
+            margin: 16px 0;
+        }
+
+        .score-box .value {
+            font-family: 'Baloo 2', cursive;
+            font-size: 2.4rem;
+            color: var(--wall);
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .quiz {
+            margin-top: 20px;
+        }
+
+        .quiz-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .quiz-options button {
+            background: #fff;
+            border: 2px solid #dfe6f2;
+            color: var(--wall);
+            box-shadow: none;
+        }
+
+        .quiz-options button.correct {
+            background: var(--success);
+            border-color: var(--success-dark);
+            color: #fff;
+        }
+
+        .quiz-options button.wrong {
+            background: #ffd7d7;
+            border-color: var(--primary-dark);
+        }
+
+        /* ---------- LEVEL 6: certificate ---------- */
+        .certificate {
+            background: linear-gradient(135deg, #fff 0%, #fff9ec 100%);
+            border: 3px dashed var(--yellow);
+        }
+
+        .cert-card {
+            border: 3px solid var(--wall);
+            border-radius: 18px;
+            padding: 32px;
+            text-align: center;
+            background: #fff;
+            margin-top: 10px;
+        }
+
+        .cert-card input {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.5rem;
+            text-align: center;
+            border: none;
+            border-bottom: 3px solid var(--primary);
+            padding: 6px 10px;
+            margin: 10px 0 18px;
+            background: transparent;
+            color: var(--wall);
+            width: min(100%, 340px);
+        }
+
+        .cert-card input:focus-visible {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px 60px;
+            color: var(--ink-soft);
+            font-size: .9rem;
+        }
+
+        /* ---------- REGISTRATION / BOOKING ---------- */
+        .book-card {
+            max-width: 820px;
+            margin: 0 auto 32px;
+            padding: 0 20px;
+        }
+
+        .book-inner {
+            background: linear-gradient(135deg, #fff 0%, #f3fffb 100%);
+            border: 3px solid var(--success);
+            border-radius: 24px;
+            padding: 32px clamp(20px, 4vw, 44px);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(6, 214, 160, .15);
+        }
+
+        .book-inner h2 {
+            margin-bottom: 6px;
+        }
+
+        .book-inner p {
+            color: var(--ink-soft);
+            max-width: 520px;
+            margin: 0 auto 18px;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: #fff;
+            box-shadow: 0 4px 0 #1aa851;
+            font-size: 1.05rem;
+            padding: .8em 1.6em;
+            text-decoration: none;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .whatsapp-btn:active {
+            box-shadow: 0 1px 0 #1aa851;
+            transform: translateY(3px);
+        }
+
+        .book-note {
+            margin-top: 16px;
+            font-size: .85rem;
+            color: var(--ink-soft);
+            background: #f3f8ff;
+            border-radius: 10px;
+            padding: 10px 16px;
+            display: inline-block;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+            }
+        }
+
+        @media (max-width:560px) {
+            .quest-map {
+                max-width: 100%;
+            }
+
+            .quest-node span.label {
+                display: none;
+            }
+
+            .puzzle-wrap {
+                gap: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="hero">
+        <div class="eyebrow">A tiny coding class</div>
+        <h1>Code Quest 🚀</h1>
+        <p class="lead">Learn how coding really works by guiding your rocket, Rosie, across the sky — one command at a
+            time.</p>
+
+        <nav class="quest-map" aria-label="Lesson map">
+            <a class="quest-node" data-level="level1" href="#level1"><span class="dot">📖</span><span class="label">What
+                    is code?</span></a>
+            <a class="quest-node" data-level="level2" href="#level2"><span class="dot">1️⃣</span><span
+                    class="label">Sequences</span></a>
+            <a class="quest-node" data-level="level3" href="#level3"><span class="dot">🔁</span><span
+                    class="label">Loops</span></a>
+            <a class="quest-node" data-level="level4" href="#level4"><span class="dot">❓</span><span class="label">If /
+                    Else</span></a>
+            <a class="quest-node" data-level="level5" href="#level5"><span class="dot">🧮</span><span
+                    class="label">Variables</span></a>
+            <a class="quest-node" data-level="level6" href="#level6"><span class="dot">🏅</span><span
+                    class="label">Certificate</span></a>
+        </nav>
+    </header>
+
+    <section class="book-card">
+        <div class="book-inner">
+            <h2>Want one-on-one help? 🙋</h2>
+            <p>I'm a grade 8 student who loves coding and tutoring! Message my mom on WhatsApp to book a one-on-one
+                lesson — she handles all the scheduling.</p>
+            <a class="whatsapp-btn"
+                href="https://wa.me/16476144590?text=Hi!%20I'd%20like%20to%20book%20a%20coding%20tutoring%20lesson."
+                target="_blank" rel="noopener">
+                💬 Message on WhatsApp
+            </a>
+            <div class="book-note">📱 A parent/guardian manages all bookings and messages.</div>
+        </div>
+    </section>
+
+    <main>
+
+        <!-- LEVEL 1 -->
+        <section class="level-card" id="level1">
+            <div class="level-head">
+                <div class="level-num">📖</div>
+                <h2>What is code, anyway?</h2>
+            </div>
+            <p>Code is just a list of <b>exact instructions</b> for a computer — like a recipe for a robot. The computer
+                does exactly what you tell it, in exactly the order you tell it. Nothing more, nothing less!</p>
+            <div class="concept-box"><b>Big idea:</b> A computer has no imagination. If you forget a step, it won't
+                guess what you meant — it'll just get stuck (or do something silly).</div>
+            <p>Watch what happens when we "run" the instructions for making a peanut butter sandwich:</p>
+            <div class="steps-row" id="recipeSteps">
+                <div class="step-chip"><small>1</small>🍞 Get bread</div>
+                <div class="step-chip"><small>2</small>🥜 Add peanut butter</div>
+                <div class="step-chip"><small>3</small>🍞 Add second slice</div>
+                <div class="step-chip"><small>4</small>😋 Eat!</div>
+            </div>
+            <button class="btn-primary" id="playRecipe">▶ Run the recipe</button>
+            <p style="margin-top:14px;">That's it — that's code! Now let's write real instructions for Rosie the rocket.
+            </p>
+        </section>
+
+        <!-- LEVEL 2: SEQUENCES -->
+        <section class="level-card" id="level2">
+            <div class="level-head">
+                <div class="level-num">1️⃣</div>
+                <h2>Sequences: order matters</h2>
+            </div>
+            <p>A <b>sequence</b> is a set of steps that happen one after another, in order. Help Rosie fly straight up,
+                then turn and fly to the star ⭐ — using the fewest, clearest commands you can.</p>
+            <div class="concept-box"><b>Try it:</b> Click commands to build your program, then hit Run. Get the order
+                wrong and Rosie will fly off course!</div>
+
+            <div class="puzzle-wrap">
+                <div class="grid-shell">
+                    <div class="grid" id="grid2"></div>
+                    <div class="rocket" id="rocket2">🚀</div>
+                </div>
+                <div class="controls">
+                    <div class="palette">
+                        <button class="btn-block" data-lvl="2" data-cmd="F">⬆ Forward</button>
+                        <button class="btn-block" data-lvl="2" data-cmd="R">↩ Turn right</button>
+                        <button class="btn-block" data-lvl="2" data-cmd="L">↪ Turn left</button>
+                    </div>
+                    <div class="program" id="program2" aria-label="Your program"></div>
+                    <div class="action-row">
+                        <button class="btn-primary" data-run="2">▶ Run</button>
+                        <button class="btn-ghost" data-undo="2">↶ Undo</button>
+                        <button class="btn-ghost" data-reset="2">↺ Reset</button>
+                    </div>
+                    <p class="status-msg" id="status2" role="status"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEVEL 3: LOOPS -->
+        <section class="level-card" id="level3">
+            <div class="level-head">
+                <div class="level-num">🔁</div>
+                <h2>Loops: don't repeat yourself</h2>
+            </div>
+            <p>Rosie needs to fly a long way this time. You *could* click "Forward" six times... or you could use a
+                <b>loop</b> to repeat a command automatically!</p>
+            <div class="concept-box"><b>Big idea:</b> A loop says "do this again" so you don't have to write (or click!)
+                the same instruction over and over.</div>
+
+            <div class="puzzle-wrap">
+                <div class="grid-shell">
+                    <div class="grid" id="grid3"></div>
+                    <div class="rocket" id="rocket3">🚀</div>
+                </div>
+                <div class="controls">
+                    <div class="palette">
+                        <button class="btn-block" data-lvl="3" data-cmd="F">⬆ Forward</button>
+                        <button class="btn-block" data-lvl="3" data-cmd="REP3"
+                            style="background:var(--yellow); color:var(--wall); box-shadow:0 4px 0 #e0ac2e;">🔁 Repeat
+                            ×3: Forward</button>
+                    </div>
+                    <div class="program" id="program3" aria-label="Your program"></div>
+                    <div class="action-row">
+                        <button class="btn-primary" data-run="3">▶ Run</button>
+                        <button class="btn-ghost" data-undo="3">↶ Undo</button>
+                        <button class="btn-ghost" data-reset="3">↺ Reset</button>
+                    </div>
+                    <p class="status-msg" id="status3" role="status"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEVEL 4: CONDITIONALS -->
+        <section class="level-card" id="level4">
+            <div class="level-head">
+                <div class="level-num">❓</div>
+                <h2>If / Else: making decisions</h2>
+            </div>
+            <p>Sometimes code needs to make a choice. This "smart" block checks the sky ahead: <b>if</b> there's open
+                space, Rosie flies forward — <b>else</b>, she turns. Click it a few times and watch her think for
+                herself!</p>
+            <div class="concept-box"><b>Under the hood:</b> <code>IF space ahead → fly forward, ELSE → turn left</code>
+            </div>
+
+            <div class="puzzle-wrap">
+                <div class="grid-shell">
+                    <div class="grid" id="grid4"></div>
+                    <div class="rocket" id="rocket4">🚀</div>
+                </div>
+                <div class="controls">
+                    <div class="palette">
+                        <button class="btn-block" data-lvl="4" data-cmd="IFWALL"
+                            style="background:var(--yellow); color:var(--wall); box-shadow:0 4px 0 #e0ac2e;">❓ If clear
+                            → forward, else turn</button>
+                    </div>
+                    <div class="program" id="program4" aria-label="Your program"></div>
+                    <div class="action-row">
+                        <button class="btn-primary" data-run="4">▶ Run</button>
+                        <button class="btn-ghost" data-undo="4">↶ Undo</button>
+                        <button class="btn-ghost" data-reset="4">↺ Reset</button>
+                    </div>
+                    <p class="status-msg" id="status4" role="status"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEVEL 5: VARIABLES -->
+        <section class="level-card" id="level5">
+            <div class="level-head">
+                <div class="level-num">🧮</div>
+                <h2>Variables: a box for a value</h2>
+            </div>
+            <p>A <b>variable</b> is like a labeled box that stores a value the computer can change. Here's a variable
+                called <code>score</code>. Press the buttons and watch the box update.</p>
+            <div class="score-box">
+                <span>📦 score =</span>
+                <span class="value" id="scoreValue">0</span>
+            </div>
+            <div class="action-row">
+                <button class="btn-block" id="scorePlus1">+1</button>
+                <button class="btn-block" id="scorePlus5">+5</button>
+                <button class="btn-ghost" id="scoreReset">↺ Reset to 0</button>
+            </div>
+
+            <div class="quiz">
+                <p><b>Quick check:</b> if <code>score</code> starts at 0, and you click <code>+5</code> twice, what is
+                    <code>score</code> now?</p>
+                <div class="quiz-options" id="quizOptions">
+                    <button data-val="5">5</button>
+                    <button data-val="10">10</button>
+                    <button data-val="0">0</button>
+                    <button data-val="25">25</button>
+                </div>
+                <p class="status-msg" id="quizStatus" role="status"></p>
+            </div>
+        </section>
+
+        <!-- LEVEL 6: CERTIFICATE -->
+        <section class="level-card certificate" id="level6">
+            <div class="level-head">
+                <div class="level-num">🏅</div>
+                <h2>You did it!</h2>
+            </div>
+            <p>You just learned four real programming concepts: <b>sequences</b>, <b>loops</b>, <b>conditionals</b>, and
+                <b>variables</b>. Every app, game, and website is built from these same basic ideas. Fill in your name
+                for a certificate you can show off:</p>
+            <div class="cert-card">
+                <div style="font-size:2rem;">🚀🏅</div>
+                <div style="font-family:'Baloo 2',cursive; font-size:1.1rem; color:var(--ink-soft); margin-top:6px;">
+                    This certifies that</div>
+                <input type="text" id="certName" placeholder="Type your name here">
+                <div style="font-family:'Baloo 2',cursive; font-size:1.3rem; color:var(--wall);">is officially a Code
+                    Explorer! 🎉</div>
+                <div style="margin-top:10px; color:var(--ink-soft); font-size:.9rem;" id="certDate"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>Made for young coders, ages 7–13. Have fun, and remember: every good coder makes mistakes — that's how you
+        learn! 🚀</footer>
+
+    <script>
+        (function () {
+            "use strict";
+
+            const DIRS = ['N', 'E', 'S', 'W'];
+            const VECT = { N: { dr: -1, dc: 0 }, E: { dr: 0, dc: 1 }, S: { dr: 1, dc: 0 }, W: { dr: 0, dc: -1 } };
+            const ROT = { N: 0, E: 90, S: 180, W: 270 };
+
+            function turnRight(d) { return DIRS[(DIRS.indexOf(d) + 1) % 4]; }
+            function turnLeft(d) { return DIRS[(DIRS.indexOf(d) + 3) % 4]; }
+
+            function markDone(levelId) {
+                const node = document.querySelector('.quest-node[data-level="' + levelId + '"]');
+                if (node) node.classList.add('done');
+            }
+
+            /* ---------- LEVEL 1: recipe animation ---------- */
+            document.getElementById('playRecipe').addEventListener('click', function () {
+                const chips = document.querySelectorAll('#recipeSteps .step-chip');
+                chips.forEach(c => c.classList.remove('active'));
+                let i = 0;
+                const iv = setInterval(function () {
+                    chips.forEach(c => c.classList.remove('active'));
+                    if (i < chips.length) {
+                        chips[i].classList.add('active');
+                        i++;
+                    } else {
+                        clearInterval(iv);
+                        markDone('level1');
+                    }
+                }, 650);
+            });
+
+            /* ---------- GRID PUZZLE ENGINE ---------- */
+            function buildGrid(containerId, cols, rows) {
+                const el = document.getElementById(containerId);
+                el.style.gridTemplateColumns = 'repeat(' + cols + ', var(--cell))';
+                el.style.gridTemplateRows = 'repeat(' + rows + ', var(--cell))';
+                el.style.gap = 'var(--gap)';
+                el.innerHTML = '';
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'cell';
+                        el.appendChild(cell);
+                    }
+                }
+                return el;
+            }
+
+            function placeMarker(containerId, cols, row, col, symbol) {
+                const el = document.getElementById(containerId);
+                const idx = row * cols + col;
+                el.children[idx].textContent = symbol;
+            }
+
+            function setup(levelNum, cfg) {
+                const gridId = 'grid' + levelNum;
+                const rocketId = 'rocket' + levelNum;
+                const programId = 'program' + levelNum;
+                const statusId = 'status' + levelNum;
+
+                buildGrid(gridId, cfg.cols, cfg.rows);
+                placeMarker(gridId, cfg.cols, cfg.goal.row, cfg.goal.col, '⭐');
+                placeMarker(gridId, cfg.cols, cfg.start.row, cfg.start.col, '🛰️');
+
+                let program = [];
+                let running = false;
+
+                const rocketEl = document.getElementById(rocketId);
+                const statusEl = document.getElementById(statusId);
+                const programEl = document.getElementById(programId);
+
+                const cellStep = 64 + 6; // matches --cell + --gap
+
+                let state = { row: cfg.start.row, col: cfg.start.col, dir: cfg.start.dir };
+
+                function renderRocket() {
+                    rocketEl.style.left = (8 + state.col * cellStep) + 'px';
+                    rocketEl.style.top = (8 + state.row * cellStep) + 'px';
+                    rocketEl.style.transform = 'rotate(' + ROT[state.dir] + 'deg)';
+                }
+
+                function resetState() {
+                    state = { row: cfg.start.row, col: cfg.start.col, dir: cfg.start.dir };
+                    renderRocket();
+                }
+                resetState();
+
+                const labels = { F: '⬆ Forward', L: '↪ Left', R: '↩ Right', REP3: '🔁×3 Forward', IFWALL: '❓ If clear' };
+
+                function renderProgram() {
+                    programEl.innerHTML = '';
+                    if (program.length === 0) {
+                        programEl.innerHTML = '<span style="color:#9aa5bd; font-weight:600;">Your program will appear here…</span>';
+                    }
+                    program.forEach(function (cmd) {
+                        const chip = document.createElement('span');
+                        chip.className = 'chip';
+                        chip.textContent = labels[cmd];
+                        programEl.appendChild(chip);
+                    });
+                }
+                renderProgram();
+
+                // palette buttons for this level
+                document.querySelectorAll('[data-lvl="' + levelNum + '"]').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        if (running) return;
+                        program.push(btn.getAttribute('data-cmd'));
+                        renderProgram();
+                        statusEl.textContent = '';
+                        statusEl.className = 'status-msg';
+                    });
+                });
+
+                document.querySelector('[data-undo="' + levelNum + '"]').addEventListener('click', function () {
+                    if (running) return;
+                    program.pop();
+                    renderProgram();
+                });
+
+                document.querySelector('[data-reset="' + levelNum + '"]').addEventListener('click', function () {
+                    if (running) return;
+                    program = [];
+                    renderProgram();
+                    resetState();
+                    statusEl.textContent = '';
+                    statusEl.className = 'status-msg';
+                });
+
+                function inBounds(row, col) {
+                    return row >= 0 && row < cfg.rows && col >= 0 && col < cfg.cols;
+                }
+
+                function stepForward() {
+                    const v = VECT[state.dir];
+                    const nr = state.row + v.dr;
+                    const nc = state.col + v.dc;
+                    if (!inBounds(nr, nc)) return false;
+                    state.row = nr; state.col = nc;
+                    return true;
+                }
+
+                // expand program into atomic runtime actions; IFWALL is resolved live during run
+                function expand(prog) {
+                    const out = [];
+                    prog.forEach(function (cmd) {
+                        if (cmd === 'REP3') { out.push('F', 'F', 'F'); }
+                        else { out.push(cmd); }
+                    });
+                    return out;
+                }
+
+                document.querySelector('[data-run="' + levelNum + '"]').addEventListener('click', function () {
+                    if (running || program.length === 0) return;
+                    running = true;
+                    resetState();
+                    statusEl.textContent = '';
+                    statusEl.className = 'status-msg';
+
+                    const actions = expand(program);
+                    let i = 0;
+                    let crashed = false;
+
+                    const iv = setInterval(function () {
+                        if (i >= actions.length) {
+                            clearInterval(iv);
+                            finish();
+                            return;
+                        }
+                        const a = actions[i];
+                        if (a === 'L') { state.dir = turnLeft(state.dir); }
+                        else if (a === 'R') { state.dir = turnRight(state.dir); }
+                        else if (a === 'F') {
+                            const ok = stepForward();
+                            if (!ok) { crashed = true; clearInterval(iv); finish(); return; }
+                        }
+                        else if (a === 'IFWALL') {
+                            const v = VECT[state.dir];
+                            const nr = state.row + v.dr, nc = state.col + v.dc;
+                            if (inBounds(nr, nc)) { state.row = nr; state.col = nc; }
+                            else { state.dir = turnLeft(state.dir); }
+                        }
+                        renderRocket();
+                        i++;
+                    }, 550);
+
+                    function finish() {
+                        running = false;
+                        if (crashed) {
+                            statusEl.textContent = "🌥️ Oops — Rosie flew off the edge! Reset and try again.";
+                            statusEl.className = 'status-msg fail';
+                        } else if (state.row === cfg.goal.row && state.col === cfg.goal.col) {
+                            statusEl.textContent = "🎉 You reached the star! Great coding!";
+                            statusEl.className = 'status-msg success';
+                            markDone('level' + levelNum);
+                        } else {
+                            statusEl.textContent = "🚀 Almost — Rosie didn't quite reach the star. Try again!";
+                            statusEl.className = 'status-msg fail';
+                        }
+                    }
+                });
+            }
+
+            // Level 2: sequence — 4 cols x 3 rows, start bottom-left facing N, goal top-right
+            setup(2, { cols: 4, rows: 3, start: { row: 2, col: 0, dir: 'N' }, goal: { row: 0, col: 3 } });
+
+            // Level 3: loop — straight line, 6 cols x 1 row
+            setup(3, { cols: 6, rows: 1, start: { row: 0, col: 0, dir: 'E' }, goal: { row: 0, col: 5 } });
+
+            // Level 4: conditional — 3x3, start bottom-left facing E, goal top-right
+            setup(4, { cols: 3, rows: 3, start: { row: 2, col: 0, dir: 'E' }, goal: { row: 0, col: 2 } });
+
+            /* ---------- LEVEL 5: variables ---------- */
+            let score = 0;
+            const scoreValueEl = document.getElementById('scoreValue');
+            function renderScore() { scoreValueEl.textContent = score; }
+            document.getElementById('scorePlus1').addEventListener('click', function () { score += 1; renderScore(); });
+            document.getElementById('scorePlus5').addEventListener('click', function () { score += 5; renderScore(); });
+            document.getElementById('scoreReset').addEventListener('click', function () { score = 0; renderScore(); });
+
+            const quizStatus = document.getElementById('quizStatus');
+            document.querySelectorAll('#quizOptions button').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('#quizOptions button').forEach(b => b.classList.remove('correct', 'wrong'));
+                    if (btn.getAttribute('data-val') === '10') {
+                        btn.classList.add('correct');
+                        quizStatus.textContent = "🎉 Yes! 0 + 5 + 5 = 10.";
+                        quizStatus.className = 'status-msg success';
+                        markDone('level5');
+                    } else {
+                        btn.classList.add('wrong');
+                        quizStatus.textContent = "Not quite — remember, each +5 adds to what's already in the box. Try again!";
+                        quizStatus.className = 'status-msg fail';
+                    }
+                });
+            });
+
+            /* ---------- LEVEL 6: certificate ---------- */
+            document.getElementById('certDate').textContent = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('certName').addEventListener('input', function () {
+                if (this.value.trim().length > 0) markDone('level6');
+            });
+
+        })();
+    </script>
+</body>
+
+</html>
