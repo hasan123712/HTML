@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Weekly Chore Planner</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #fff9db;
+        }
+
+        h1,
+        h3 {
+            color: #c92a2a;
+        }
+
+        .box {
+            background: white;
+            color: #c92a2a;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-4">
+        <h1 class="mb-1">My Weekly Chore Planner</h1>
+        <p class="text-muted mb-4">Sort and label your weekly chores using JavaScript array methods!</p>
+        <!-- TOPIC 1 & 2: sort() and reverse() -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">Weekly Chores</h3>
+                <button class="btn btn-danger mr-2" onclick="sortAZ()">Sort A to Z</button>
+                <button class="btn btn-danger" onclick="sortZA()">Sort Z to A</button>
+                <div id="taskResult" class="box p-3 mt-3 rounded"></div>
+            </div>
+        </div>
+        <!-- TOPIC 3: sort() with compare function -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">Chore Time Needed</h3>
+                <button class="btn btn-danger mr-2" onclick="sortShortest()">Shortest First</button>
+                <button class="btn btn-danger" onclick="sortLongest()">Longest First</button>
+                <div id="timeResult" class="box p-3 mt-3 rounded"></div>
+            </div>
+        </div>
+        <!-- TOPIC 4: map() -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">Label Every Chore Time</h3>
+                <button class="btn btn-danger" onclick="addLabel()">Add Minutes Label</button>
+                <div id="labelResult" class="box p-3 mt-3 rounded"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var chores = ["Dishes", "Laundry", "Vacuuming", "Dusting", "Watering Plants"];
+        var minutes = [45, 35, 20, 15, 5];
+        document.getElementById("taskResult").innerHTML =
+            "Chores: " + chores;
+        document.getElementById("timeResult").innerHTML =
+            "Minutes needed: " + minutes;
+        document.getElementById("labelResult").innerHTML =
+            "Press the button above!";
+        function sortAZ() {
+            chores.sort();
+            document.getElementById("taskResult").innerHTML = "A to Z: " + chores;
+        }
+        function sortZA() {
+            chores.sort();
+            chores.reverse();
+            document.getElementById("taskResult").innerHTML = "Z to A: " + chores;
+        }
+        function sortShortest() {
+            minutes.sort(function (a, b) { return a - b; });
+            document.getElementById("timeResult").innerHTML = "Shortest chores first: " + minutes;
+        }
+        function sortLongest() {
+            minutes.sort(function (a, b) { return b - a; });
+            document.getElementById("timeResult").innerHTML = "Longest chores first: " + minutes;
+        }
+        function addLabel() {
+            var labelledMinutes = minutes.map(function (time) { return time + " minutes"; });
+            document.getElementById("labelResult").innerHTML = "Labelled times: " + labelledMinutes;
+        }
+    </script>
+</body>
+
+</html>
