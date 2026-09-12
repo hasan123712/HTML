@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Heera's Money App</title>
+
+    <!-- CSS STYLES -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Outer card container (#app) */
+        #app {
+            background-color: #ffffff;
+            width: 340px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Bank / App name (#app-title) */
+        #app-title {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 24px;
+        }
+
+        /* Balance Box (#balance-box) */
+        #balance-box {
+            background-color: #eef2f7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        #balance-label {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 5px;
+        }
+
+        #balance {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* Entry Box (#entry-box) */
+        #entry-box {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        #amount-label {
+            display: block;
+            font-size: 14px;
+            color: #444444;
+            margin-bottom: 6px;
+        }
+
+        #amount {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        /* Button Box (#button-box) */
+        #button-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Shared button style (.action) */
+        .action {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* Credit button style (.credit) */
+        .action.credit {
+            background-color: #27ae60;
+        }
+
+        .action.credit:hover {
+            background-color: #219150;
+        }
+
+        /* Debit button style (.debit) */
+        .action.debit {
+            background-color: #e74c3c;
+        }
+
+        .action.debit:hover {
+            background-color: #c0392b;
+        }
+
+        /* Small print at the bottom (#note) */
+        #note {
+            font-size: 12px;
+            color: #888888;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Outer card container -->
+    <div id="app">
+
+        <!-- App Title (an h1) -->
+        <h1 id="app-title">Heera's Money Tracker</h1>
+
+        <!-- Balance Box -->
+        <div id="balance-box">
+            <div id="balance-label">Available balance</div>
+            <div id="balance">0.00</div>
+        </div>
+
+        <!-- Entry Box -->
+        <div id="entry-box">
+            <label id="amount-label" for="amount">Enter amount</label>
+            <input type="number" id="amount" placeholder="0.00">
+        </div>
+
+        <!-- Button Box -->
+        <div id="button-box">
+            <button class="action credit" id="credit-btn">Credit</button>
+            <button class="action debit" id="debit-btn">Debit</button>
+        </div>
+
+        <!-- Small print at the bottom -->
+        <p id="note">One number, always right.</p>
+
+    </div>
+
+    <!-- JAVASCRIPT CODE -->
+    <script>
+        const balanceDisplay = document.getElementById('balance');
+        const amountInput = document.getElementById('amount');
+        const creditBtn = document.getElementById('credit-btn');
+        const debitBtn = document.getElementById('debit-btn');
+
+        let currentBalance = 0.00;
+
+        // Add money (Credit)
+        creditBtn.addEventListener('click', function () {
+            let amount = parseFloat(amountInput.value);
+            if (!isNaN(amount) && amount > 0) {
+                currentBalance += amount;
+                balanceDisplay.innerText = currentBalance.toFixed(2);
+                amountInput.value = '';
+            } else {
+                alert('Please enter a valid amount.');
+            }
+        });
+
+        // Subtract money (Debit)
+        debitBtn.addEventListener('click', function () {
+            let amount = parseFloat(amountInput.value);
+            if (!isNaN(amount) && amount > 0) {
+                if (amount <= currentBalance) {
+                    currentBalance -= amount;
+                    balanceDisplay.innerText = currentBalance.toFixed(2);
+                    amountInput.value = '';
+                } else {
+                    alert('Insufficient balance!');
+                }
+            } else {
+                alert('Please enter a valid amount.');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
