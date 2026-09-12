@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Heera's Bank App</title>
+    <style>
+        /* ===================================================
+       PART 1: Set one clean font for the whole page
+       =================================================== */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* ===================================================
+       PART 4: Lift the app card off the page
+       =================================================== */
+        .app-card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            width: 300px;
+            /* Box shadow lifts the card off the page */
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===================================================
+       PART 2: Make the app title shout
+       =================================================== */
+        .app-title {
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-top: 0;
+        }
+
+        /* ===================================================
+       PART 3: Underline the two labels
+       =================================================== */
+        .label {
+            text-decoration: underline;
+            font-weight: bold;
+            color: #444444;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+
+        /* ===================================================
+       PART 5: Give each button its own colour and lift
+       =================================================== */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .btn-deposit {
+            background-color: #28a745;
+            /* Green color */
+            box-shadow: 0px 4px 8px rgba(40, 167, 69, 0.4);
+            /* Green lift */
+        }
+
+        .btn-withdraw {
+            background-color: #dc3545;
+            /* Red color */
+            box-shadow: 0px 4px 8px rgba(220, 53, 69, 0.4);
+            /* Red lift */
+        }
+
+        /* ===================================================
+       PART 6: Strike through the terms note
+       =================================================== */
+        .terms-note {
+            text-decoration: line-through;
+            font-size: 12px;
+            color: #888888;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PART 4: App Card -->
+    <div class="app-card">
+
+        <!-- PART 2: Title -->
+        <h1 class="app-title">Heera's Bank</h1>
+
+        <!-- PART 3: First Label -->
+        <p class="label">Current Balance:</p>
+        <h2 id="balance-display">$100.00</h2>
+
+        <!-- PART 3: Second Label -->
+        <p class="label">Actions:</p>
+
+        <!-- PART 5: Buttons -->
+        <div class="actions">
+            <button class="btn btn-deposit" onclick="deposit()">Deposit</button>
+            <button class="btn btn-withdraw" onclick="withdraw()">Withdraw</button>
+        </div>
+
+        <!-- PART 6: Terms Note -->
+        <p class="terms-note">No fees apply for early withdrawal.</p>
+
+    </div>
+
+    <script>
+        let balance = 100;
+
+        function deposit() {
+            balance += 10;
+            updateDisplay();
+        }
+
+        function withdraw() {
+            if (balance >= 10) {
+                balance -= 10;
+                updateDisplay();
+            } else {
+                alert("Not enough funds!");
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById("balance-display").innerText = "$" + balance.toFixed(2);
+        }
+    </script>
+
+</body>
+
+</html>
