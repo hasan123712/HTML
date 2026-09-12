@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Susan's Restaurant</title>
+
+    <!-- CSS STYLES -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+        /* Social Media Section */
+        .social-section {
+            background-color: #ffe6e6;
+            padding: 40px 20px;
+            margin-top: 30px;
+        }
+
+        .social-section h2 {
+            color: #ff6b6b;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .social-section p {
+            color: #555555;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 12px 24px;
+            margin: 8px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .social-btn:hover {
+            background-color: #e05252;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #333333;
+            color: #ffffff;
+            padding: 30px 10px;
+            margin-top: 30px;
+        }
+
+        footer h3 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        footer p {
+            margin: 6px 0;
+            font-size: 14px;
+            color: #cccccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1. SOCIAL MEDIA SECTION -->
+    <div class="social-section">
+        <h2>Follow Us On Social Media</h2>
+        <p>Connect with Susan's Restaurant for daily specials, menu updates, and offers!</p>
+
+        <div>
+            <a href="https://www.facebook.com" target="_blank" class="social-btn"
+                onclick="showPopup('Facebook')">Facebook</a>
+            <a href="https://www.instagram.com" target="_blank" class="social-btn"
+                onclick="showPopup('Instagram')">Instagram</a>
+            <a href="https://www.twitter.com" target="_blank" class="social-btn"
+                onclick="showPopup('Twitter')">Twitter</a>
+        </div>
+    </div>
+
+    <!-- 2. FOOTER SECTION -->
+    <footer>
+        <h3>Susan's Restaurant</h3>
+        <p>📍 Location: 123 Main Street, Foodville</p>
+        <p>📞 Phone: (123) 456-7890 | ✉️ Email: info@susansrestaurant.com</p>
+        <p>© 2026 Susan's Restaurant. All rights reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT CODE -->
+    <script>
+        function showPopup(platformName) {
+            alert("Opening Susan's Restaurant " + platformName + " page!");
+        }
+    </script>
+
+</body>
+
+</html>
