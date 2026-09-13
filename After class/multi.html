@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Carol's Multiplication App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 340px;
+        }
+
+        h2 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        .output-box {
+            background-color: #eef2ff;
+            border: 2px dashed #6366f1;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 16px;
+            color: #1e1b4b;
+            text-align: left;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>Multiplication Helper</h2>
+
+        <div class="output-box">
+            <p id="output1"></p>
+            <p id="output2"></p>
+        </div>
+    </div>
+
+    <script>
+        // Function with two parameters (a and b)
+        function multiply(a, b) {
+            // Conditional statement to check if the second parameter is undefined
+            if (b === undefined) {
+                b = 1; // Default b to 1 if no second number is passed
+            }
+
+            return a * b;
+        }
+
+        // Case 1: Both parameters are provided (6 * 4)
+        let result1 = multiply(6, 4);
+        document.getElementById("output1").innerHTML =
+            "<b>Both values given (6, 4):</b><br>" + result1;
+
+        // Case 2: Only one parameter is provided (8, undefined)
+        let result2 = multiply(8);
+        document.getElementById("output2").innerHTML =
+            "<b>One value given (8, undefined):</b><br>" + result2;
+    </script>
+
+</body>
+
+</html>
