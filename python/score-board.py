@@ -36,3 +36,13 @@ cricket = Cricket("Rohit", 85)
 football = Football("Arjun", 2)
 print("=== Sports Scoreboard ===\n")
 for sport in (cricket, football):
+    sport.info()
+    sport.play()
+    print()
+
+print("--- Direct change attempt ---")
+cricket.__score = 999
+print(f"get_score() still shows: {cricket.get_score()}")
+print("\n--- Updating scores ---")
+cricket.set_score(100)
+football.set_score(3)
